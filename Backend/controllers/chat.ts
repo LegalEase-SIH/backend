@@ -26,7 +26,7 @@ export const creatNewSession=async(req:Request,res:Response,next:NextFunction)=>
 
 export const getAllChatSessions=async(req:Request,res:Response,next:NextFunction)=>{
     try{
-        const chatSessions=await chat.find({userId:req.params})
+        const chatSessions=await chat.find({userId:req.params.userId})
         res.status(200).json(chatSessions)
 
     }
