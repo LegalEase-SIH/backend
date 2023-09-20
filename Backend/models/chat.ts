@@ -6,7 +6,9 @@ const ChatSchema=new mongoose.Schema({
         default:()=>Date.now()
     },
     userId:{
-        type:String
+        type:String,
+        index:true,
+
     },
     lastUpdatedAt:{
         type:Date
