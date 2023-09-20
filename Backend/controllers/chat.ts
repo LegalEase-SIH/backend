@@ -34,3 +34,43 @@ export const getAllChatSessions=async(req:Request,res:Response,next:NextFunction
         next(err)
     }
 }
+
+
+// @desc add new chat response to chat session
+// @route PUT /api/session/:sessionId
+
+export const createNewChatResponse=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+         // getting the chat session
+        const sesId=req.params.sessionId
+         const chatSession=await chat.findById(sesId)
+         const userId=req.body.userId
+         
+         const question=req.body.question
+         const currDate=new Date()
+         
+        // fetch the reply from the model
+         const reply="Here is the answer for your question"
+        
+         const currChat={"userQuestion":question,"reply":reply,"time":currDate}
+         
+        //  console.log("Current session chats: ",chatSession?.chats)
+
+        //  console.log(currChat)
+
+        
+         let prevChats=chatSession?.chats
+         prevChats.push(currChat)
+
+         chatSession.chats=prevChats
+         chatSession.save()
+
+
+      
+       res.status(200).json(chatSession)
+    }
+    catch(err){
+         next(err)
+        console.log(err)
+    }
+}

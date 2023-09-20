@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { creatNewSession ,getAllChatSessions} from "../controllers/chat";
+import { creatNewSession ,createNewChatResponse,getAllChatSessions} from "../controllers/chat";
 
 
 const router = express.Router();
@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post("/",creatNewSession)
 router.get("/:userId",getAllChatSessions)
+router.put("/:sessionId",createNewChatResponse)
 
 
 export default router
