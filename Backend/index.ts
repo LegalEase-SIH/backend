@@ -6,7 +6,6 @@ const port = process.env.PORT
 const app=express()
 
 const connect=async()=>{
-
     try{
         await mongoose.connect(process.env.MONGO_URI!);
         console.log("Connected to mongoDB")
@@ -15,8 +14,7 @@ const connect=async()=>{
        
         throw error
     }
-    
-    }
+}
     
 // checking if mongodb is connected
 mongoose.connection.on("discconncted",()=>{
@@ -32,6 +30,6 @@ mongoose.connection.on("connected",()=>{
 app.listen(port,()=>{
     connect()
     console.log("Connected to backend.")
+    console.log(`Listening on http://localhost:${port} ...`);
 }) 
-console.log(`Listening on http://localhost:${port} ...`);
   
