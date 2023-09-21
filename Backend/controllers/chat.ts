@@ -59,6 +59,10 @@ export const updateSessionName=async(req:Request,res:Response,next:NextFunction)
         const newName=req.body.sessionName
         const sessionId=req.params.sessionId
         const chatSession=await chat.findById(sessionId)
+
+        if (chatSession===null || chatSession === undefined){
+            return res.status(404).json({message:"Session not found"})
+        }
            // update the session name
         chatSession.sessionName=newName
         chatSession.save()
@@ -80,6 +84,11 @@ export const createNewChatResponse=async(req:Request,res:Response,next:NextFunct
          // getting the chat session
         const sesId=req.params.sessionId
          const chatSession=await chat.findById(sesId)
+        
+         if (chatSession===null || chatSession === undefined){
+            return res.status(404).json({message:"Session not found"})
+         }
+
          const userId=req.body.userId
          
          const question=req.body.question
@@ -95,7 +104,7 @@ export const createNewChatResponse=async(req:Request,res:Response,next:NextFunct
         //  console.log(currChat)
 
         
-         let prevChats=chatSession?.chats
+         let prevChats=chatSession.chats
          prevChats.push(currChat)
 
          chatSession.chats=prevChats
