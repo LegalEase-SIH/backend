@@ -5,6 +5,7 @@
     "target": "esnext",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "composite": true,
@@ -18,5 +19,9 @@
     "types": [
       "bun-types" // add Bun global
     ]
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   }
 }

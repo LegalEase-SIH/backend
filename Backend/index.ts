@@ -1,8 +1,11 @@
-import express, { NextFunction, Request, Response, ErrorRequestHandler } from "express"
+import express, { NextFunction, Request, Response } from "express"
 import mongoose from "mongoose";
 import chatRoute from "./routes/chat.route.ts"
 import petitionRoute from "./routes/petition.route"
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 import {v2 as cloudinary} from 'cloudinary';
           
