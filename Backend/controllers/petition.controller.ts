@@ -71,4 +71,13 @@ const getPetitionById = async (req: Request, res: Response) => {
 const calculateNer = async (req: Request, res: Response) => {
 
 }
-export { createPetition, getAllPetitions, getPetitionById, calculateNer };
+
+const handleSuccessRate = async (req: Request, res: Response) => {
+  try {
+    
+  } catch(err) {
+
+  }
+}
+
+export { createPetition, getAllPetitions, getPetitionById, calculateNer, handleSuccessRate };
