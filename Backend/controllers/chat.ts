@@ -9,7 +9,7 @@ import express, { NextFunction, Request, Response, request } from "express"
 // @access public 
 
 export const creatNewSession=async(req:Request,res:Response,next:NextFunction)=>{
-    const newSession=new chat({userId:req.body.userId})
+    const newSession=new chat({userId:req.body.userId,sessionName:req.body.sessionName})
 
     try{
         const savedSession=await newSession.save()
@@ -47,6 +47,28 @@ export const getSessionById=async(req:Request,res:Response,next:NextFunction)=>{
     catch(err){
         next(err)
         console.log(err)
+    }
+}
+
+// @desc update session name
+/// @route PUT /api/session/sessionname/:sessionId
+
+export const updateSessionName=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        // get the new name
+        const newName=req.body.sessionName
+        const sessionId=req.params.sessionId
+        const chatSession=await chat.findById(sessionId)
+           // update the session name
+        chatSession.sessionName=newName
+        chatSession.save()
+
+
+        res.status(200).json(chatSession)
+
+    }
+    catch(err){
+        next(err)
     }
 }
 
