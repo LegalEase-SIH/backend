@@ -22,7 +22,7 @@ export const creatNewSession=async(req:Request,res:Response,next:NextFunction)=>
 
 // @desc Get all chat sessions
 // @route  GET /api/session/:userId
-// @acess public 
+// @access public 
 
 export const getAllChatSessions=async(req:Request,res:Response,next:NextFunction)=>{
     try{
@@ -35,6 +35,20 @@ export const getAllChatSessions=async(req:Request,res:Response,next:NextFunction
     }
 }
 
+// @desc get chat session by sessionId
+// @route GET /api/session/sessionReq/:sessionId
+// @access public
+
+export const getSessionById=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const chatSession=await chat.findById({_id:req.params.sessionId})
+        res.status(200).json(chatSession)
+    }
+    catch(err){
+        next(err)
+        console.log(err)
+    }
+}
 
 // @desc add new chat response to chat session
 // @route PUT /api/session/:sessionId
