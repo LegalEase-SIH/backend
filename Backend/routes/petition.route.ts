@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { createPetition } from "../controllers/petition.controller";
+import uploadFile from "../middlewares/multer";
 
 const route = express.Router();
 
@@ -15,7 +16,7 @@ route.get("/petition/:id/user/:userId", (req: Request, res: Response) => {
 
 })
 
-route.post("/petition", (req: Request, res: Response) => createPetition)
+route.post("/user/:userId/petition", uploadFile, createPetition)
 
 route.get("/petition", (req: Request, res: Response) => {
 
