@@ -4,6 +4,16 @@ import petitionRoute from "./routes/petition.route"
 import cors from "cors";
 import dotenv from "dotenv";
 import chatRoute from "./routes/chat.route.ts"
+import petitionRoute from "./routes/petition.route"
+
+import {v2 as cloudinary} from 'cloudinary';
+          
+cloudinary.config({ 
+  cloud_name: 'dbof2unk7', 
+  api_key: '238897199255322', 
+  api_secret: 'MfViYWodfH0o-sPhUZgmox4yQTk' 
+});
+
 
 dotenv.config()
 
@@ -41,6 +51,8 @@ app.use(cors())
 // app.use("/api/session")
 app.use("/api", petitionRoute);
 app.use("/api/session",chatRoute)
+app.use(express.urlencoded({ extended: true }))
+app.use("/api", petitionRoute);
 
 // error handling middleware
 app.use((err: any, req: Request, res: Response, next:NextFunction) => {
