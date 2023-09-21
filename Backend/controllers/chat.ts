@@ -1,3 +1,4 @@
+import { CryptoHasher } from "bun";
 import chat from "../models/chat";
 import express, { NextFunction, Request, Response, request } from "express"
 
@@ -8,7 +9,7 @@ import express, { NextFunction, Request, Response, request } from "express"
 // @access public 
 
 export const creatNewSession=async(req:Request,res:Response,next:NextFunction)=>{
-    const newSession=new chat()
+    const newSession=new chat({userId:req.body.userId})
 
     try{
         const savedSession=await newSession.save()
@@ -23,3 +24,13 @@ export const creatNewSession=async(req:Request,res:Response,next:NextFunction)=>
 // @route  GET /api/session/:userId
 // @acess public 
 
+export const getAllChatSessions=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const chatSessions=await chat.find({userId:req.params})
+        res.status(200).json(chatSessions)
+
+    }
+    catch(err){
+        next(err)
+    }
+}

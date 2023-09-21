@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import petitionRoute from "./routes/petition.route"
 import cors from "cors";
 import dotenv from "dotenv";
+import chatRoute from "./routes/chat.route.ts"
 
 dotenv.config()
 
@@ -39,6 +40,7 @@ app.use(cors())
 
 // app.use("/api/session")
 app.use("/api", petitionRoute);
+app.use("/api/session",chatRoute)
 
 // error handling middleware
 app.use((err: any, req: Request, res: Response, next:NextFunction) => {
