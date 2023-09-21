@@ -78,15 +78,11 @@ const petitionSchema = new mongoose.Schema<PetitionAttrs>({
     required: true,
     unique: true,
   },
-  petitionId: {
-    type: String,
-    required: true,
-    index: true,
-  },
   userId: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true,
   },
   createdAt: {
     type: Date,
