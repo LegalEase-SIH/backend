@@ -4,7 +4,6 @@ import petitionRoute from "./routes/petition.route"
 import cors from "cors";
 import dotenv from "dotenv";
 import chatRoute from "./routes/chat.route.ts"
-import petitionRoute from "./routes/petition.route"
 
 import {v2 as cloudinary} from 'cloudinary';
           
@@ -17,7 +16,6 @@ cloudinary.config({
 
 dotenv.config()
 
-import {v2 as cloudinary} from 'cloudinary';
           
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
