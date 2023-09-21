@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 interface PetitionAttrs extends mongoose.Document {
   url: string;
   userId: string;
-  publicId: string;
   createdAt: Date;
   successRate: number;
   ner: NerAttrs;
@@ -74,11 +73,6 @@ interface PetitionModel extends mongoose.Model<PetitionAttrs> { }
 
 const petitionSchema = new mongoose.Schema<PetitionAttrs>({
   url: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  publicId: {
     type: String,
     required: true,
     unique: true,
