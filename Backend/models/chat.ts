@@ -13,6 +13,9 @@ const ChatSchema=new mongoose.Schema({
     lastUpdatedAt:{
         type:Date
     },
+    sessionName:{
+       type:String,      
+    },
     chats:[
         {
             userQuestion:String,
