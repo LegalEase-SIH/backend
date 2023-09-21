@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express"
+import express, { NextFunction, Request, Response, ErrorRequestHandler } from "express"
 import mongoose from "mongoose";
 import petitionRoute from "./routes/petition.route"
 import cors from "cors";
@@ -8,9 +8,9 @@ import chatRoute from "./routes/chat.route.ts"
 import {v2 as cloudinary} from 'cloudinary';
           
 cloudinary.config({ 
-  cloud_name: 'dbof2unk7', 
-  api_key: '238897199255322', 
-  api_secret: 'MfViYWodfH0o-sPhUZgmox4yQTk' 
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET 
 });
 
 
@@ -50,6 +50,9 @@ app.use(cors())
 app.use("/api", petitionRoute);
 app.use("/api/session",chatRoute)
 app.use(express.urlencoded({ extended: true }))
+app.use(cors())
+
+// app.use("/api/session")
 app.use("/api", petitionRoute);
 
 // error handling middleware
