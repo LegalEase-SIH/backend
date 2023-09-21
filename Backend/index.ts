@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express"
 import mongoose from "mongoose";
+import chatRoute from "./routes/chat.route.ts"
 
 const port = process.env.PORT
 
@@ -21,7 +22,7 @@ const connect = async () => {
 // send json data
 app.use(express.json())
 
-app.use("/api/session")
+app.use("/api/session",chatRoute)
 
 // error handling middleware
 app.use((err: Error, req: Request, res: Response, next:NextFunction) => {
