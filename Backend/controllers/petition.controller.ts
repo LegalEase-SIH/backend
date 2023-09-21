@@ -41,17 +41,34 @@ const createPetition = async (req: Request, res: Response) => {
   }
 }
 
-const getPetition = (req: Request, res: Response) => {
-  const fileName = req.params.name;
-  const directoryPath = __dirname + "/resources/static/assets/uploads/";
+const getAllPetitions = async (req: Request, res: Response) => {
 
-  res.download(directoryPath + fileName, fileName, (err) => {
-    if (err) {
-      res.status(500).send({
-        message: "Could not download the file. " + err,
-      });
-    }
-  });
+  try {
+    const petition = await PetitionModel.find({ userId: req.params.userId })
+
+    res.status(200).send(petition)
+
+  } catch(err) {
+    res.status(500).send({
+      message: err
+    })
+  }
 }
 
-export { createPetition };
+const getPetitionById = async (req: Request, res: Response) => {
+  try {
+    const petition = await PetitionModel.findById(req.params.petitionId)
+
+    return res.status(200).send(petition)
+
+  } catch(err) {
+      res.status(500).send({
+      message: err
+    })
+}
+}
+
+const calculateNer = async (req: Request, res: Response) => {
+
+}
+export { createPetition, getAllPetitions, getPetitionById, calculateNer };

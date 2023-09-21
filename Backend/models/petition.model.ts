@@ -86,7 +86,6 @@ const petitionSchema = new mongoose.Schema<PetitionAttrs>({
   userId: {
     type: String,
     required: true,
-    unique: true,
     index: true,
   },
   createdAt: {
@@ -95,6 +94,7 @@ const petitionSchema = new mongoose.Schema<PetitionAttrs>({
   },
   ner: {
     type: nerSchema,
+    default: () => ({})
   },
   successRate: {
     type: Number,
