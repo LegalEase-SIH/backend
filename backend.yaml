@@ -1,24 +1,24 @@
 apiVersion: core.oam.dev/v1beta1
 kind: Application 
 metadata:
-  name: sih-application
+  name: sih-backend
   annotations:
     version: 0.10.1
     description: "This is full SIH stack"
 spec:
   components:
-    - name: bart-sr-model
+    - name: backend
       type: webservice
       properties:
-        image: dhairyagupta/petition-success:latest
-        cpu: "1"
-        memory: 3Gi
-        ports:
-          - port: 8080
+        image: nimish8/backend
+        cpu: "512m"
+        memory: 2Gi
+        ports:  
+          - port: 8000
             expose: true
-      traits: 
+      traits:
         - type: napptive-ingress
           properties:
-            name: bart-sr-model-ingress
-            port: 8080
-            path: /
+            name: backend-ingress
+            port: 8000
+            path: /api
