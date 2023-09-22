@@ -112,9 +112,13 @@ const handleSuccessRate = async (req: Request, res: Response) => {
       })
     }
 
-    const result = await axios.post("http://localhost:9000/predict",  {
+    const result = await axios.post("https://bart-sr-model-ingress-cj8815hg2gg97uokhutg.apps.mumbai1.eks.zone.napptive.dev/petitionSuccessProb",  {
       petitionId: petitionId,
       url: petition.url  
+    })
+
+    petition.set({
+      
     })
 
     return res.status(200).send({
