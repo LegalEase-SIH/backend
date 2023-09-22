@@ -6,7 +6,7 @@ const route = express.Router();
 
 route.get("/petition/:id/ner", calculateNer)
 
-route.get("/petition/:id/successRate", handleSuccessRate)
+route.get("/petition/successRate/:id", handleSuccessRate)
 
 route.post("/user/:userId/petition", uploadFile, createPetition)
 
