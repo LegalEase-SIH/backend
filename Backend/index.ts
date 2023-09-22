@@ -1,21 +1,28 @@
+import dotenv from "dotenv";
+dotenv.config()
+
 import express, { NextFunction, Request, Response } from "express"
+import {getApp, initializeApp} from "firebase/app"
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
+};
+
+initializeApp(firebaseConfig);
+
 import mongoose from "mongoose";
 import petitionRoute from "./routes/petition.route"
 import cors from "cors";
-import dotenv from "dotenv";
 import chatRoute from "./routes/chat.route.ts"
 
-import {v2 as cloudinary} from 'cloudinary';
 import middleware from "./middlewares/auth.ts";
           
-dotenv.config()
           
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.API_KEY, 
-  api_secret: process.env.API_SECRET 
-});
-
 const port = process.env.PORT
 const app = express()
 
