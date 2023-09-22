@@ -11,6 +11,8 @@
   },
   "scripts": {
     "start": "ts-node index.ts",
+    "build": "tsc",
+    "clean": "tsc --build --clean",
     "dev": "nodemon index.ts",
     "dev:node": "ts-node index.ts"
   },

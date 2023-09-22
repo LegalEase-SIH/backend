@@ -72,6 +72,8 @@ const createPetition = async (req: Request, res: Response) => {
 }
 
 const getAllPetitions = async (req: Request, res: Response) => {
+  console.log("Inslide get all petitions");
+  
   try {
     const petition = await PetitionModel.find({ userId: req.params.userId })
 
@@ -100,6 +102,7 @@ const calculateNer = async (req: Request, res: Response) => {
 }
 
 const handleSuccessRate = async (req: Request, res: Response) => {
+  console.log("Inside handle successRate")
   try {
     const petitionId = req.params.id;
 
@@ -112,19 +115,26 @@ const handleSuccessRate = async (req: Request, res: Response) => {
       })
     }
 
+    if (petition.successRate !== 0) {
+      return res.status(200).json({
+        petition: petition,
+        cached: true
+      }) 
+    }
+
     const result = await axios.post("https://bart-sr-model-ingress-cj8815hg2gg97uokhutg.apps.mumbai1.eks.zone.napptive.dev/petitionSuccessProb",  {
       petitionId: petitionId,
       url: petition.url  
     })
 
-    petition.set({
-      
-    })
+    petition.successRate = result.data.prediction_prob;
 
-    return res.status(200).send({
-      successRate: result.data.successRate
-    })
+    await petition.save();
 
+    return res.status(200).json({
+      petition: petition,
+      cached: false
+    })
 
   } catch (err) {
     return res.status(500).send({
