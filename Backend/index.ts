@@ -6,17 +6,14 @@ import dotenv from "dotenv";
 import chatRoute from "./routes/chat.route.ts"
 
 import {v2 as cloudinary} from 'cloudinary';
-
           
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
   api_key: process.env.API_KEY, 
   api_secret: process.env.API_SECRET 
 });
-
 
 dotenv.config()
-
           
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_NAME, 
@@ -24,22 +21,17 @@ cloudinary.config({
   api_secret: process.env.API_SECRET 
 });
 
-
 const port = process.env.PORT
-
 const app = express()
 
 const connect = async () => {
-
     try {
         await mongoose.connect(process.env.MONGO_URI!);
         console.log("Connected to mongoDB")
     }
     catch (error) {
-
         throw error
     }
-
 }
 
 // send json data
