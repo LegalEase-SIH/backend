@@ -13,11 +13,13 @@ class Middleware {
 
         try {
             const decodedValue = await admin.auth().verifyIdToken(token);
+            console.log("Decoded value is: ",decodedValue);
+            
             if (decodedValue) {
                 console.log(decodedValue);
-                next();
+                return next();
             }
-            return res.json({message: "Unauthorized"})
+            return res.status(401).json({message: "Unauthorized"})
         } catch(err) {
             return res.json({message: "Internal error"})
         }

@@ -2,18 +2,12 @@ import { Request, Response } from "express";
 import PetitionModel from "../models/petition.model";
 import { MulterError } from "multer";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../config/firebase.config";
 import axios from "axios";
-
-initializeApp(firebaseConfig);
-
-const storage = getStorage();
 
 const createPetition = async (req: Request, res: Response) => {
   try {
     console.log("after ");
-
+    const storage = getStorage();
 
     if (!req.file) {
       return res.status(500).send("Something went wrong")
@@ -24,9 +18,6 @@ const createPetition = async (req: Request, res: Response) => {
     const metadata = {
       contentType: req.file.mimetype,
     }
-
-    console.log("HERE");
-    
 
     const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
 
@@ -47,7 +38,7 @@ const createPetition = async (req: Request, res: Response) => {
 
     await petition.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Uploaded the file successfully: " + req.file!.originalname,
       petitionId: petition._id,
       url: petition.url,
@@ -55,6 +46,8 @@ const createPetition = async (req: Request, res: Response) => {
 
   } catch (err) {
     console.log("SOME ERROR");
+    console.log(err);
+    
     
     if (err instanceof MulterError) {
       return res.status(500).send({
@@ -62,7 +55,7 @@ const createPetition = async (req: Request, res: Response) => {
       });
     }
     else {
-      res.status(500).send({
+      return res.status(500).send({
         message: `Could not upload the file: ${err}`
       });
     }
