@@ -4,6 +4,7 @@ node_modules
 .env
 resources/
 bun.lockb
+legalease-sa.json
 
 # Logs
 logs

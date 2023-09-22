@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import chatRoute from "./routes/chat.route.ts"
 
 import {v2 as cloudinary} from 'cloudinary';
+import middleware from "./middlewares/auth.ts";
           
 dotenv.config()
           
@@ -32,6 +33,7 @@ const connect = async () => {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+app.use(middleware.decodeToken)
 
 // app.use("/api/session")
 app.use("/api", petitionRoute);

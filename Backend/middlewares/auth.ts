@@ -1,16 +1,27 @@
 import { NextFunction, Request, Response } from "express";
-import { getAuth } from "firebase-admin/auth";
+import admin from "../auth/firebase.service";
 
-export const authorizeUser = async (req:Request, res: Response, next: NextFunction) => {
-    const header = req.header("Authorization")
-    if (header === undefined || header==null) {
-        return next(new Error("Authorization Token not found"))
-    }
-    try {
+class Middleware {
+    async decodeToken(req: Request, res: Response, next: NextFunction) {
+        const header = req.headers.authorization;
+
+        if (header === undefined || header === null) {
+            return next(new Error("No token provided"));
+        }
+
         const token = header.split(" ")[1];
-        const userId = await getAuth().verifyIdToken(token)
-        next();
-    } catch(err) {
-        return next(new Error("User not authorized"))
+
+        try {
+            const decodedValue = await admin.auth().verifyIdToken(token);
+            if (decodedValue) {
+                console.log(decodedValue);
+                next();
+            }
+            return res.json({message: "Unauthorized"})
+        } catch(err) {
+            return res.json({message: "Internal error"})
+        }
     }
 }
+
+export default new Middleware();
