@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
-import { v2 as cloudinary } from "cloudinary";
 import PetitionModel from "../models/petition.model";
 import { MulterError } from "multer";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../config/firebase.config";
 import axios from "axios";
-
 
 initializeApp(firebaseConfig);
 
