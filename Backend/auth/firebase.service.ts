@@ -1,9 +1,9 @@
 import admin from "firebase-admin";
 
-let serviceAccount = require("legalease-sa.json");
+import serviceAccount from "./legalease-sa.json" assert {type: "json"};
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount as any)
 });
 
 export default admin;

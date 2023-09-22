@@ -3,13 +3,10 @@ import PetitionModel from "../models/petition.model";
 import { MulterError } from "multer";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { initializeApp } from "firebase/app";
-import { initializeApp as app } from "firebase-admin"
 import { firebaseConfig } from "../config/firebase.config";
 import axios from "axios";
 
-
 initializeApp(firebaseConfig);
-app(firebaseConfig);
 
 const storage = getStorage();
 
