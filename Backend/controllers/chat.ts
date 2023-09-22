@@ -1,6 +1,5 @@
-import { CryptoHasher } from "bun";
 import chat from "../models/chat";
-import express, { NextFunction, Request, Response, request } from "express"
+import { NextFunction, Request, Response } from "express"
 
 // CRUD for chat
 
