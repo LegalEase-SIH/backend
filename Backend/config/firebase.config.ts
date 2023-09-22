@@ -1,10 +1,10 @@
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyD9Wb6xXLhGJ4DWXsXLagakiHH7z0cuaZY",
-  authDomain: "legalease-bb0ad.firebaseapp.com",
-  projectId: "legalease-bb0ad",
-  storageBucket: "legalease-bb0ad.appspot.com",
-  messagingSenderId: "7173006259",
-  appId: "1:7173006259:web:b114b0b40aa989ae34a1c6"
+  apiKey: process.env.FIREBASE_API,
+  authDomain: process.env.FIREABSE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 
