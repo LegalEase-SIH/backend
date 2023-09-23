@@ -13,7 +13,7 @@ class Middleware {
 
         try {
             const decodedValue = await admin.auth().verifyIdToken(token);
-            console.log("Decoded value is: ",decodedValue);
+            // console.log("Decoded value is: ",decodedValue);
             
             if (decodedValue) {
                 console.log(decodedValue);
