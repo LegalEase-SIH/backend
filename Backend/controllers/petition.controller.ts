@@ -132,6 +132,28 @@ const calculateNer = async (req: Request, res: Response) => {
   }
 }
 
+const search = async (req: Request, res: Response) => {
+  const query = req.query.query;
+  try {
+    const result = await axios.post(baseUrl + "/ml/chat/search", {
+      query: query
+    })
+
+    console.log(result.data);
+
+
+    return res.status(200).json({
+      result: result.data
+    })
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).send({
+      message: err
+    })
+  }
+}
+
 const handleSuccessRate = async (req: Request, res: Response) => {
   console.log("Inside handle successRate")
   try {
@@ -174,4 +196,4 @@ const handleSuccessRate = async (req: Request, res: Response) => {
   }
 }
 
-export { createPetition, getAllPetitions, getPetitionById, calculateNer, handleSuccessRate };
+export { createPetition, getAllPetitions, getPetitionById, calculateNer, handleSuccessRate, search };
