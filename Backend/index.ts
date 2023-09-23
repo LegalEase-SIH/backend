@@ -40,7 +40,7 @@ const connect = async () => {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
-app.use(middleware.decodeToken)
+// app.use(middleware.decodeToken)
 
 // app.use("/api/session")
 app.use("/api", petitionRoute);

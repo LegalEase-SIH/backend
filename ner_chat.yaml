@@ -1,0 +1,24 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: sih-ml
+  annotations:
+    version: 0.10.1
+    description: "This is full SIH stack"
+spec:
+  components:
+    - name: ml-backend
+      type: webservice
+      properties:
+        image: aaparajit02/legalease_chat_ner:latest
+        cpu: "1"
+        memory: 4Gi
+        ports:
+          - port: 8080
+            expose: true
+      traits:
+        - type: napptive-ingress
+          properties:
+            name: ml-backend-ingress
+            port: 8080
+            path: /ml

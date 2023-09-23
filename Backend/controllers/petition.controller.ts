@@ -4,6 +4,8 @@ import { MulterError } from "multer";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import axios from "axios";
 
+const baseUrl = "http://d645-35-204-1-76.ngrok-free.app"
+
 const createPetition = async (req: Request, res: Response) => {
   try {
     console.log("after ");
@@ -47,8 +49,8 @@ const createPetition = async (req: Request, res: Response) => {
   } catch (err) {
     console.log("SOME ERROR");
     console.log(err);
-    
-    
+
+
     if (err instanceof MulterError) {
       return res.status(500).send({
         message: err.message,
@@ -64,7 +66,7 @@ const createPetition = async (req: Request, res: Response) => {
 
 const getAllPetitions = async (req: Request, res: Response) => {
   console.log("Inslide get all petitions");
-  
+
   try {
     const petition = await PetitionModel.find({ userId: req.params.userId })
 
@@ -89,7 +91,45 @@ const getPetitionById = async (req: Request, res: Response) => {
 }
 
 const calculateNer = async (req: Request, res: Response) => {
+  try {
+    const petitionId = req.params.id;
 
+    // Database call
+    const petition = await PetitionModel.findOne({ _id: petitionId });
+
+    if (petition === null || petition === undefined) {
+      return res.status(404).send({
+        message: "Petition not found"
+      })
+    }
+
+    const result = await axios.post(baseUrl + "/ml/ner", {
+      url: petition.url
+    })
+
+    const list = result.data;
+    console.log(list);
+
+
+    list.forEach((item: any) => {
+      const key = Object.keys(item)[0]
+      const val = item[key]
+
+      petition.ner.set(key, val)
+    })
+
+    await petition.save();
+
+    return res.status(200).json({
+      petition: petition,
+      cached: false
+    })
+
+  } catch (err) {
+    return res.status(500).send({
+      message: err
+    })
+  }
 }
 
 const handleSuccessRate = async (req: Request, res: Response) => {
@@ -98,7 +138,7 @@ const handleSuccessRate = async (req: Request, res: Response) => {
     const petitionId = req.params.id;
 
     // Database call
-    const petition = await PetitionModel.findOne({ _id: petitionId});
+    const petition = await PetitionModel.findOne({ _id: petitionId });
 
     if (petition === null || petition === undefined) {
       return res.status(404).send({
@@ -110,12 +150,12 @@ const handleSuccessRate = async (req: Request, res: Response) => {
       return res.status(200).json({
         petition: petition,
         cached: true
-      }) 
+      })
     }
 
-    const result = await axios.post("https://bart-sr-model-ingress-cj8815hg2gg97uokhutg.apps.mumbai1.eks.zone.napptive.dev/petitionSuccessProb",  {
+    const result = await axios.post("https://bart-sr-model-ingress-cj8815hg2gg97uokhutg.apps.mumbai1.eks.zone.napptive.dev/petitionSuccessProb", {
       petitionId: petitionId,
-      url: petition.url  
+      url: petition.url
     })
 
     petition.successRate = result.data.prediction_prob;
