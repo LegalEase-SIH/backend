@@ -1,5 +1,6 @@
 import chat from "../models/chat";
 import { NextFunction, Request, Response } from "express"
+import axios from "axios";
 
 // CRUD for chat
 
@@ -89,12 +90,45 @@ export const createNewChatResponse=async(req:Request,res:Response,next:NextFunct
          }
 
          const userId=req.body.userId
+
+         const allChatSession=await chat.findById({_id:req.params.sessionId})
+        // console.log("ALL CHAT SESSIONS: ",allChatSession)
+
+       // @ts-ignore
+        const modified=[]
+
+        allChatSession?.chats.forEach(element => {
+             modified.push({"userQuestion":element.userQuestion,"reply":element.reply})
+        });
+
+       
+        // const modified=allChatSession?.chats.((chat)=>{
+        //     const newObj = new Object(chat);
+        //     // @ts-ignore
+        //     delete chat.time
+        //     // @ts-ignore
+        //     delete chat._id
+        //     return chat
+        // })
+
+        // @ts-ignore
+        console.log("modified: ",modified)
          
          const question=req.body.question
          const currDate=new Date()
+
+         const resBody={
+            "userQuestion":question,
+             // @ts-ignore
+            "chats":modified
+         }
          
-        // fetch the reply from the model
-         const reply="Here is the answer for your question"
+       //  console.log(resBody)
+        // // fetch the reply from the model
+         // @ts-ignore
+        const res1=await axios.post("http://d645-35-204-1-76.ngrok-free.app/ml/chat/openai",resBody)
+        console.log("Model reply: ",res1.data)
+         const reply=res1.data.response
         
          const currChat={"userQuestion":question,"reply":reply,"time":currDate}
          
@@ -114,7 +148,7 @@ export const createNewChatResponse=async(req:Request,res:Response,next:NextFunct
        res.status(200).json(chatSession)
     }
     catch(err){
-         next(err)
+        // next(err)
         console.log(err)
     }
 }
