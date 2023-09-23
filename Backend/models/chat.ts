@@ -1,32 +1,32 @@
 import mongoose from "mongoose";
 
-const ChatSchema=new mongoose.Schema({
-    sessionCreatedAt:{
+const ChatSchema = new mongoose.Schema({
+    sessionCreatedAt: {
         type: Date,
-        default:()=>Date.now()
+        default: () => Date.now()
     },
-    userId:{
-        type:String,
-        index:true,
+    userId: {
+        type: String,
+        index: true,
 
     },
-    lastUpdatedAt:{
-        type:Date
+    lastUpdatedAt: {
+        type: Date
     },
-    sessionName:{
-       type:String,      
+    sessionName: {
+        type: String,
     },
-    chats:[
+    chats: [
         {
-            userQuestion:String,
+            userQuestion: String,
             reply: String,
-            time:{
-                type:Date,
-                default:()=>Date.now()
+            time: {
+                type: Date,
+                default: () => Date.now()
             }
 
         }
     ]
 })
 
-export default mongoose.model("Chat",ChatSchema)
+export default mongoose.model("Chat", ChatSchema)
